@@ -35,7 +35,7 @@ the following technologies:
 - React
 - Redux
 - React Router 4
-- Webpack 2
+- Webpack 4
 - Hot Module Reloader 3
 - Babel
 - Express

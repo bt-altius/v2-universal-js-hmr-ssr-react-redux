@@ -23,7 +23,7 @@ export default {
     },
     output: {
         filename: 'app.js',
-        chunkFilename: '[name]_[chunkhash].js',
+        chunkFilename: '[name]_[hash:5].js',
         path: path.join(root, 'build'),
         publicPath: '/static/'
     },
@@ -52,8 +52,6 @@ export default {
                     }
                 }
             },
-
-            // Javascript
             {
                 test: /\.js$/,
                 include: clientInclude,
@@ -74,20 +72,18 @@ export default {
                     }
                 ],
             },
-
-            // CSS
             {
                 test: /\.css$/,
                 include: clientInclude,
                 use: [
-                    { loader: 'style-loader' },
+                    'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
                             root: src,
                             modules: true,
                             importLoaders: 1,
-                            localIdentName: '[name]_[local]_[hash:base64:5]'
+                            localIdentName: '[local]_[hash:5]'
                         }
                     }
                 ]

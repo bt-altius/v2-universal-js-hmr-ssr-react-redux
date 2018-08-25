@@ -1,12 +1,12 @@
-import http    from 'http';
+import http from 'http';
 import express from 'express';
-import colors  from 'colors';
-import path    from 'path';
+import colors from 'colors';
+import path from 'path';
 
 // Server Side Rendering
 import {
-  renderPage,
-  renderDevPage
+    renderPage,
+    renderDevPage
 } from './ssr.js';
 
 const PROD = process.env.NODE_ENV === 'production';
@@ -14,39 +14,44 @@ const PROD = process.env.NODE_ENV === 'production';
 const app = express();
 
 if (PROD) {
-  app.use('/static', express.static('build'));
-  app.get('*', renderPage);
+    app.use('/static', express.static('build'));
+    app.get('*', renderPage);
 } else {
-  const HMR = require('./hmr.js');
-  // Hot Module Reloading
-  HMR(app);
-  app.get('*', renderDevPage);
+    const HMR = require('./hmr.js');
+    // Hot Module Reloading
+    HMR(app);
+    app.get('*', renderDevPage);
 }
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use(function (req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // development error handler
 if (!PROD) {
-  app.use(function(err, req, res, next) {
-    console.error('error : ', err)
-    res.status(err.status || 500);
-  });
+    app.use(function (err, req, res, next) {
+        console.error('error : ', err)
+        res.status(err.status || 500);
+    });
 }
 
 // production error handler
-app.use(function(err, req, res, next) {
-  console.error('error : ', err.message)
-  res.status(err.status || 500);
+app.use(function (err, req, res, next) {
+    console.log("")
+    console.log("")
+    console.log(req)
+    console.log("")
+    console.log("")
+    console.error('error : ', err.message)
+    res.status(err.status || 500);
 });
 
 const server = http.createServer(app);
 
-server.listen(8080, function() {
-   const address = server.address();
-   console.log(`[${process.env.NODE_ENV.cyan}] Listening on http://localhost:${address.port}`);
- });
+server.listen(8080, function () {
+    const address = server.address();
+    console.log(`\n[${process.env.NODE_ENV.cyan}] Listening on http://localhost:${address.port}\n\n`);
+});
